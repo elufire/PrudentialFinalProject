@@ -1,11 +1,34 @@
-<resources>
+<resources xmlns:android = "http://schemas.android.com/apk/res/android">
 
     <!-- Base application theme. -->
     <style name = "AppTheme" parent = "Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name = "colorPrimary">@color/colorPrimary</item>
-        <item name = "colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name = "colorPrimary">@color/blue</item>
+        <item name = "colorPrimaryDark">@color/blue</item>
         <item name = "colorAccent">@color/colorAccent</item>
     </style>
+
+    <style name = "LoginActivity" parent = "Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name = "colorPrimary">@color/blue</item>
+        <item name = "colorPrimaryDark">@color/blue</item>
+        <item name = "colorAccent">@color/colorAccent</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name = "AccountDisplay" parent = "Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name = "colorPrimary">@color/blue</item>
+        <item name = "colorPrimaryDark">@color/blue</item>
+        <item name = "colorAccent">@color/colorAccent</item>
+        <item name="windowNoTitle">true</item>
+        <item name = "windowActionBar">false</item>
+    </style>
+
+    <style name = "SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name = "android:windowBackground">@drawable/splash_design</item>
+
+    </style>
+
 
 </resources>

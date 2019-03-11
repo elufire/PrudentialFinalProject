@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android = "http://schemas.android.com/apk/res/android"
+    xmlns:app = "http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name = "accountsFragment"
+            type = "com.example.prudentialfinalproject.fragments.AccountsFragment"/>
+        <variable
+            name = "userMainViewModel"
+            type = "com.example.prudentialfinalproject.UserMainViewModel"/>
+
+        <variable
+            name = "user"
+            type = "com.example.prudentialfinalproject.models.User"/>
+    </data>
+
+<android.support.constraint.ConstraintLayout
+    android:layout_width = "match_parent"
+    android:layout_height = "match_parent">
+
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/accountsHolder"
+        android:layout_width = "0dp"
+        android:layout_height = "wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.9">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/checkingAccountHolder"
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:onClick="@{(view) -> accountsFragment.onClick(view, user)}">
+
+        <TextView
+            android:id="@+id/tvCheckingName"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:text="Checking"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf ="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tvCheckingAccountNumber"/>
+
+        <TextView
+            android:id="@+id/tvCheckingAccountNumber"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:text="@{user.checkingAccountNumber}"
+            app:layout_constraintStart_toStartOf ="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvCheckingName"/>
+
+
+        <TextView
+            android:id="@+id/tvCheckingAccount"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:text="@{user.checkingAccount}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvCheckingAccountAvailable"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:textSize="15sp"
+                android:text="@{user.checkingAccountAvailable}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvCheckingAccount"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/savingsAccountHolder"
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/checkingAccountHolder"
+            android:onClick="@{(view) -> accountsFragment.onClick(view, user)}">
+
+        <TextView
+            android:id="@+id/tvSavingsName"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:text="Savings"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf ="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/tvSavingsAccountNumber"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:text="@{user.savingsAccountNumber}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSavingsName"/>
+
+
+        <TextView
+            android:id="@+id/tvSavingsAccount"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:text="@{user.savingsAccount}"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/tvSavingsAccountAvailable"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:textSize="15sp"
+                android:text="@{user.savingsAccountAvailable}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvSavingsAccount"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        app:layout_constraintTop_toBottomOf="@+id/accountsHolder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.9"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/tvQuickLinks"
+        android:layout_width = "0dp"
+        android:layout_height = "wrap_content"
+        android:text="QuickLinks"
+        android:textSize="15sp"
+        android:textColor="@color/blue"
+        android:textStyle="bold"
+        android:paddingTop="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/rvRecyclerView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.9"/>
+
+    <LinearLayout
+        android:layout_width = "0dp"
+        android:layout_height = "wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/tvQuickLinks"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.9"
+        android:layout_marginTop="20dp">
+
+    <ImageView
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:src="@drawable/credit_card"
+        android:scaleType="fitXY"
+        android:maxWidth="50dp"
+        android:maxHeight="50dp"
+        android:adjustViewBounds="true"
+        android:paddingEnd="20dp"/>
+
+    <TextView
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:text="Manage My Cards"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:gravity="center_vertical"/>
+
+        </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
+
+</layout>

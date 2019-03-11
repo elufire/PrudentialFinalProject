@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name = "account_list">
+        <item>Checking</item>
+        <item>Savings</item>
+        <item>Loan</item>
+    </array>
+</resources>

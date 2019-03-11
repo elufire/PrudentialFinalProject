@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout >
+
+    <data>
+
+        <variable
+            name = "accountDisplayViewModel"
+            type = "com.example.prudentialfinalproject.UserMainViewModel"/>
+
+        <variable
+            name = "displayAccountUser"
+            type = "com.example.prudentialfinalproject.models.User"/>
+
+        <variable
+            name = "accountActivityDisplay"
+            type = "com.example.prudentialfinalproject.activities.AccountDisplayActivity"/>
+
+    </data>
+
+<android.support.constraint.ConstraintLayout
+    xmlns:android = "http://schemas.android.com/apk/res/android"
+    xmlns:app = "http://schemas.android.com/apk/res-auto"
+    xmlns:tools = "http://schemas.android.com/tools"
+    android:layout_width = "match_parent"
+    android:layout_height = "match_parent"
+    tools:context = ".activities.AccountDisplayActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/accountDisplayDetails"
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:paddingBottom="25dp"
+        android:background="@color/blue"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvBalance"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:text="Balance"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/tvAvailableBalance"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:text="Available Balance"
+            app:layout_constraintTop_toBottomOf="@+id/tvBalance"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/tvAccountDisplayBalance"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/tvAccountDisplayAvailableBalance"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tvAccountDisplayBalance"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </android.support.constraint.ConstraintLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvAccountDisplay"
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/accountDisplayDetails">
+    </android.support.v7.widget.RecyclerView>
+
+
+</android.support.constraint.ConstraintLayout>
+</layout>

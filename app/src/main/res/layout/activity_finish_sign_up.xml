@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name = "accountSetupViewModel"
+            type = "com.example.prudentialfinalproject.UserLoginViewModel"/>
+    </data>
+<android.support.constraint.ConstraintLayout xmlns:android = "http://schemas.android.com/apk/res/android"
+    xmlns:app = "http://schemas.android.com/apk/res-auto"
+    xmlns:tools = "http://schemas.android.com/tools"
+    android:layout_width = "match_parent"
+    android:layout_height = "match_parent"
+    tools:context = ".activities.FinishSignUp">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tvAddAccountType"
+        android:layout_width = "0dp"
+        android:layout_height = "wrap_content"
+        android:text="Account Type"
+        app:layout_constraintWidth_percent="0.9"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/clAddAccountSpinnerHolder"
+        android:layout_width = "0dp"
+        android:layout_height = "wrap_content"
+        app:layout_constraintWidth_percent="0.9"
+        android:background="@drawable/edit_text_box"
+        app:layout_constraintTop_toBottomOf="@+id/tvAddAccountType"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/spAddAccountType"
+            android:layout_width = "match_parent"
+            android:layout_height = "match_parent"
+            android:entries="@array/account_list"
+            android:padding="9dp"
+            android:onItemSelected="@{(parent,view,pos,id)->accountSetupViewModel.onSelectItem(parent,view,pos,id)}"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tvAddAccountNumber"
+        android:layout_width = "0dp"
+        android:layout_height = "wrap_content"
+        android:text="Account Number"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/clAddAccountSpinnerHolder"
+        app:layout_constraintWidth_percent="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <EditText
+        android:id="@+id/etAddAccount"
+        android:background="@drawable/edit_text_box"
+        android:layout_width = "0dp"
+        android:layout_height = "wrap_content"
+        app:layout_constraintWidth_percent="0.9"
+        android:padding="9dp"
+        android:afterTextChanged="@{(editable) -> accountSetupViewModel.afterAccountNumberChanged(editable)}"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintTop_toBottomOf="@+id/tvAddAccountNumber"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tvAccountNumberStatus"
+        android:layout_width = "0dp"
+        android:layout_height = "wrap_content"
+        android:text="@{accountSetupViewModel.accountNumberValidStatus}"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@+id/etAddAccount"
+        app:layout_constraintWidth_percent="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btnAddAccount"
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:text="Add Account"
+        android:onClick="onClick"
+        app:layout_constraintTop_toBottomOf="@id/tvAccountNumberStatus"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <EditText
+        android:id="@+id/etSignUpEmail"
+        android:background="@drawable/edit_text_box"
+        android:layout_width = "0dp"
+        android:layout_height = "wrap_content"
+        app:layout_constraintWidth_percent="0.9"
+        android:padding="9dp"
+        android:hint="Email"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/btnAddAccount"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <EditText
+        android:id="@+id/etSignUpPassword"
+        android:background="@drawable/edit_text_box"
+        android:layout_width = "0dp"
+        android:layout_height = "wrap_content"
+        app:layout_constraintWidth_percent="0.9"
+        android:padding="9dp"
+        android:hint="Password"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/etSignUpEmail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btnFinishSignUp"
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:text="Sign Up"
+        android:onClick="onClick"
+        app:layout_constraintTop_toBottomOf="@id/etSignUpPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+</android.support.constraint.ConstraintLayout>
+</layout>
