@@ -4,6 +4,8 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.ViewModel;
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.Bindable;
 import android.databinding.Observable;
@@ -29,11 +31,19 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class UserLoginViewModel extends AndroidViewModel implements Observable{
+import static com.example.prudentialfinalproject.Constants.FILE_NAME;
+
+public class UserLoginViewModel extends ViewModel implements Observable{
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
     private String retrievedUserName;
@@ -42,7 +52,9 @@ public class UserLoginViewModel extends AndroidViewModel implements Observable{
     private String checkingAccountNumber;
     private String loanAccountNumber;
     private String selectedItemFromSpinner;
+    boolean saveId = false;
     MutableLiveData<String> accountNumLiveData;
+    MutableLiveData<String> retrievedUserNameLiveData;
     User globalUser;
     private String savingsAccountNumber;
     PropertyChangeRegistry propertyChangeRegistry = new PropertyChangeRegistry();
@@ -53,16 +65,60 @@ public class UserLoginViewModel extends AndroidViewModel implements Observable{
     private String passwordValidStatus;
     @Bindable
     private String accountNumberValidStatus;
+    @Bindable
+    private String savedUserName;
     FirebaseDatabase database;
     DatabaseReference myRef;
+    Context context;
 
-    public UserLoginViewModel(@NonNull Application application) {
-        super(application);
+//    public UserLoginViewModel() {
+//
+//    }
+
+    public void init(@NonNull Application application){
+        context = application;
         database = FirebaseDatabase.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         myRef = database.getReference();
         loanList = new ArrayList<>();
         globalUser = new User();
+        retrievedUserNameLiveData = new MutableLiveData<>();
+        checkForSavedUserName();
+    }
+
+    private void checkForSavedUserName(){
+        List<String> fileList = Arrays.asList(context.getFilesDir().list());
+        if(fileList.contains(FILE_NAME)){
+            int fileLocation = fileList.indexOf(FILE_NAME);
+            File file = context.getFilesDir().listFiles()[fileLocation];
+            Log.d("TAG", "File Exists: " + file.getName());
+            FileInputStream fileInputStream;
+            try {
+                fileInputStream = context.openFileInput(FILE_NAME);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(fileInputStream));
+                //StringBuilder out = new StringBuilder();
+                //String line;
+                setSavedUserName(reader.readLine());
+//                while((savedUserName = reader.readLine()) != null){
+////                    savedUserName = Integer.toString(fileInputStream.read());
+//                    Log.d("TAG", "SAVED USERNAME: " + savedUserName);
+//                }
+                reader.close();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+//            setSavedUserName();
+        }
+    }
+
+    public void setSavedUserName(String savedUserName){
+        this.savedUserName = savedUserName;
+        notifySingleBindedItems(BR.savedUserName);
+    }
+
+    public String getSavedUserName(){
+        return savedUserName;
     }
 
 //    public LiveData<User> getUserLiveData(){
@@ -107,6 +163,10 @@ public class UserLoginViewModel extends AndroidViewModel implements Observable{
         }
     }
 
+    public LiveData<String> getRetrievedUserName(){
+        return retrievedUserNameLiveData;
+    }
+
 
     public void handleClick(final View view){
         Log.d("TAG", "In handleClick");
@@ -123,10 +183,38 @@ public class UserLoginViewModel extends AndroidViewModel implements Observable{
                                         // Sign in success, update UI with the signed-in user's information
                                         Log.d("TAG", "signInWithEmail:success");
                                         firebaseUser = firebaseAuth.getCurrentUser();
+
+                                        if(saveId) {
+                                            File directory = context.getFilesDir();
+                                            if(!Arrays.asList(directory.list()).contains(FILE_NAME)) {
+                                                File file = new File(directory, FILE_NAME);
+                                                Log.d("TAG", "FILENAME: " + file.getName());
+                                            }
+                                            else{
+                                                List<String> fileList = Arrays.asList(context.getFilesDir().list());
+                                                int fileLocation = fileList.indexOf(FILE_NAME);
+                                                File file = context.getFilesDir().listFiles()[fileLocation];
+                                                file.delete();
+                                                File userNameFile = new File(directory, FILE_NAME);
+                                            }
+                                            FileOutputStream fileOutputStream;
+                                            try {
+                                                fileOutputStream = context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
+                                                fileOutputStream.write(retrievedUserName.getBytes());
+                                                fileOutputStream.close();
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+
                                         retrievedUserName = retrievedUserName.replace(".com", "");
-                                        Intent intent = new Intent(view.getContext(), AccountsActivity.class);
-                                        intent.putExtra("beautiful_userName", retrievedUserName);
-                                        view.getContext().startActivity(intent);
+                                        retrievedUserNameLiveData.setValue(retrievedUserName);
+//                                        Intent intent = new Intent(view.getContext(), AccountsActivity.class);
+//                                        intent.putExtra("beautiful_userName", retrievedUserName);
+//                                        view.getContext().startActivity(intent);
+
+
+
 //                                        List<Loan> loanList = new ArrayList<>();
 //                                        Loan loan1 = new Loan("1111", "10000.00");
 //                                        Loan loan2 = new Loan("2222", "20000.00");
@@ -170,6 +258,14 @@ public class UserLoginViewModel extends AndroidViewModel implements Observable{
                 Intent intent = new Intent(view.getContext(), SignUpActivity.class);
                 view.getContext().startActivity(intent);
                 break;
+            case R.id.cbSaveID:
+                if(saveId){
+                    saveId = false;
+                }
+                else{
+                    saveId = true;
+                }
+
         }
     }
 
@@ -234,7 +330,7 @@ public class UserLoginViewModel extends AndroidViewModel implements Observable{
         else{
             setAccountNumberValidStatus(Constants.INVALID_ACCOUNT);
         }
-        //Log.d("TAG", "");
+
     }
 
     public void setAccountNumberValidStatus(String accountNumberValidStatus){
@@ -270,7 +366,7 @@ public class UserLoginViewModel extends AndroidViewModel implements Observable{
         if(Utilities.isUserEmailValid(charSequence.toString())){
             setEmailValidStatus(Constants.VALID_EMAIL);
             retrievedUserName = charSequence.toString();
-            Log.d("TAG", "Password: " + retrievedUserName);
+            Log.d("TAG", "Username: " + retrievedUserName);
         }
         else if(!charSequence.toString().isEmpty()){
             setEmailValidStatus(Constants.INVALID_EMAIL);

@@ -1,32 +1,19 @@
 package com.example.prudentialfinalproject.activities;
 //fix
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.graphics.drawable.ColorDrawable;
-import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.prudentialfinalproject.R;
-import com.example.prudentialfinalproject.UserLoginViewModel;
-import com.example.prudentialfinalproject.UserMainViewModel;
-import com.example.prudentialfinalproject.adapters.RecyclerViewAdapterTransactions;
 import com.example.prudentialfinalproject.databinding.ActivitySignUpBinding;
-import com.example.prudentialfinalproject.models.Transaction;
-import com.example.prudentialfinalproject.models.User;
 import com.example.prudentialfinalproject.utillities.Utilities;
-
-import java.util.ArrayList;
 
 public class SignUpActivity extends AppCompatActivity {
     ActivitySignUpBinding activitySignUpBinding;
@@ -75,7 +62,7 @@ public class SignUpActivity extends AppCompatActivity {
     //@BindingAdapter("android:onClick")
     public void afterClick(final View view){
         Log.d("TAG", "BUTTON HAS BEEN CLICKED!!!");
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, SignInActivity.class);
         switch(view.getId()){
             case R.id.btnGoBackToLogIn:
                 startActivity(intent);

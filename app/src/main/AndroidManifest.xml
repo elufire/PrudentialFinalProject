@@ -27,7 +27,7 @@
             android:theme = "@style/Theme.AppCompat.Light" />
         <activity android:name = ".activities.AccountsActivity" />
         <activity
-            android:name = ".activities.MainActivity"
+            android:name = ".activities.SignInActivity"
             android:theme = "@style/LoginActivity" />
     </application>
 

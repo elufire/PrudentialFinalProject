@@ -24,6 +24,7 @@ public class FinishSignUp extends AppCompatActivity {
 
         activityFinishSignUpBinding = DataBindingUtil.setContentView(this, R.layout.activity_finish_sign_up);
         userLoginViewModel = ViewModelProviders.of(this).get(UserLoginViewModel.class);
+        userLoginViewModel.init(getApplication());
         activityFinishSignUpBinding.setAccountSetupViewModel(userLoginViewModel);
         Intent intent = getIntent();
         userLoginViewModel.initAccount(intent.getStringExtra("account_type"), intent.getStringExtra("account_number"));
@@ -46,7 +47,7 @@ public class FinishSignUp extends AppCompatActivity {
                 break;
             case R.id.btnFinishSignUp:
                 userLoginViewModel.createUserAndAddToDatabase(view, activityFinishSignUpBinding.etSignUpEmail.getText().toString(),
-                                        activityFinishSignUpBinding.etSignUpPassword.toString());
+                                        activityFinishSignUpBinding.etSignUpPassword.getText().toString());
                 break;
         }
     }

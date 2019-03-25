@@ -3,8 +3,6 @@ package com.example.prudentialfinalproject.activities;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.databinding.Bindable;
-import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.Nullable;
@@ -12,16 +10,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.example.prudentialfinalproject.R;
 import com.example.prudentialfinalproject.UserMainViewModel;
-import com.example.prudentialfinalproject.adapters.RecyclerViewAdapter;
 import com.example.prudentialfinalproject.adapters.RecyclerViewAdapterTransactions;
 import com.example.prudentialfinalproject.databinding.ActivityAccountDisplayBinding;
 import com.example.prudentialfinalproject.models.Transaction;
@@ -98,8 +93,9 @@ public class AccountDisplayActivity extends AppCompatActivity {
 
             case R.id.logOutDisplay:
                 FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(this, SignInActivity.class);
                 startActivity(intent);
+                finish();
                 break;
         }
 

@@ -7,7 +7,6 @@ import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -18,14 +17,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.prudentialfinalproject.R;
-import com.example.prudentialfinalproject.UserLoginViewModel;
 import com.example.prudentialfinalproject.UserMainViewModel;
-import com.example.prudentialfinalproject.adapters.TabAdapter;
 import com.example.prudentialfinalproject.databinding.AccountsActivityBinding;
-import com.example.prudentialfinalproject.fragments.AccountsFragment;
-import com.example.prudentialfinalproject.fragments.DepositFragment;
-import com.example.prudentialfinalproject.fragments.MoreFragment;
-import com.example.prudentialfinalproject.fragments.TransferFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class AccountsActivity extends AppCompatActivity {
@@ -84,8 +77,9 @@ public class AccountsActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_logOut:
                 FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(this, SignInActivity.class);
                 startActivity(intent);
+                finish();
                 break;
         }
 

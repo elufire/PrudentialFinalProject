@@ -5,7 +5,7 @@ import android.util.Patterns;
 
 public class Utilities {
     public static boolean isPasswordValid(String passedPassword){
-        return passedPassword.length() > 8;
+        return passedPassword.length() >= 8;
     }
 
     public static boolean isUserEmailValid(String passedUserEmail){
